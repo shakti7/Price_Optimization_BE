@@ -1,0 +1,8 @@
+/myenv
+.env
+/test.py
+
+# Byte-compiled files
+*.pyc
+*.pyo
+*.pyd
