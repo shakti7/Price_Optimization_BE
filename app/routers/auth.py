@@ -32,7 +32,7 @@ def register_user(user: UserCreate, db: Session = Depends(get_db)):
 
         # Hash the password and generate verification token
         hashed_pw = hash_password(user.password)
-        verification_token = str(uuid.uuid4())  # Generate UUID token
+        verification_token = str(uuid.uuid4())  
 
         new_user = User(
             first_name=user.first_name,
@@ -43,12 +43,12 @@ def register_user(user: UserCreate, db: Session = Depends(get_db)):
             is_verified=False
         )
 
-        # Add user to the database
+        
         db.add(new_user)
         db.commit()
         db.refresh(new_user)
 
-        # Send verification email (Implement this function in `utils.py`)
+        # Send verification email 
         send_verification_email(user.email, verification_token)
 
         return new_user
@@ -77,7 +77,7 @@ def verify_email(token: str, db: Session = Depends(get_db)):
 
         
         user.is_verified = True
-        user.verification_token = None  # Clear token after verification
+        user.verification_token = None  
         db.commit()
 
         return {"message": "Email verified successfully. You can now log in."}
@@ -109,8 +109,8 @@ def login(user_credentials: LoginRequest, response: Response, db: Session = Depe
         response.set_cookie(
             key="access_token",
             value=access_token,
-            httponly=False,  # Prevent JavaScript access
-            samesite="Lax",  # Prevent CSRF issues
+            httponly=False,  
+            samesite="Lax", 
             max_age=3600,  # 1hr expiration
         )
         response.set_cookie(
@@ -156,10 +156,10 @@ def refresh_token(response: Response, request: Request):
         if email is None:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid refresh token")
 
-        # Generate a new access token
+        
         new_access_token = create_access_token(data={"sub": email}, expires_delta=timedelta(minutes=30))
 
-        # Set new access token in cookies
+        
         response.set_cookie("access_token", new_access_token, httponly=True, samesite="Lax", max_age=1800)
 
         return {"message": "Access token refreshed"}

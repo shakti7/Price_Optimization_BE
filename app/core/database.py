@@ -6,18 +6,16 @@ from app.core.config import settings
 
 Base = declarative_base()
 
-# Create SQLAlchemy engine
+
 engine = create_engine(settings.DATABASE_URL)
 
-# Create a session factory
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-# Base class for models
 
 import app.models.user
 import app.models.product 
 
-# Dependency for database session
+
 def get_db():
     db = SessionLocal()
     try:

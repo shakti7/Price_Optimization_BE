@@ -2,7 +2,6 @@ from datetime import datetime, timedelta
 from jose import JWTError, jwt
 from app.core.config import settings
 
-# Secret Key for JWT
 SECRET_KEY = settings.JWT_SECRET_KEY  
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60  # Token expires in 1 hour

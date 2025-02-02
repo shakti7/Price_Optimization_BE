@@ -5,9 +5,7 @@ from app.models.user import User
 from app.utils.jwt import verify_token
 
 def get_current_user(request: Request, db: Session = Depends(get_db)):
-    """Extracts and verifies user from JWT token stored in an HTTP-Only Cookie."""
-
-    # Extract token from cookies
+    
     token = request.cookies.get("access_token")
     print("token: ",token)
     if not token:

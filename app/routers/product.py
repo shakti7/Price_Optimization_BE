@@ -188,7 +188,6 @@ def update_product(
 
     except Exception as e:
         db.rollback()
-        # raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
         return HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
     
 @router.get("/last-id", response_model=int)
